@@ -64,7 +64,12 @@ function logPerson(person: Person) {
     );
 }
 
-function filterPersons(persons: Person[], personType: string, criteria: unknown): unknown[] {
+// This article was really helpful for understanding overloads
+//    https://mariusschulz.com/articles/function-overloads-in-typescript
+// 
+function filterPersons(persons: Person[], personType: Admin["type"], criteria: Partial<Admin>): Admin[];
+function filterPersons(persons: Person[], personType: User["type"], criteria: Partial<User>): User[];
+function filterPersons(persons: Person[], personType: Admin["type"] | User["type"], criteria: Partial<Admin | User>): Person[] {
     return persons
         .filter((person) => person.type === personType)
         .filter((person) => {
@@ -88,3 +93,27 @@ adminsOfAge23.forEach(logPerson);
 
 // In case if you are stuck:
 // https://www.typescriptlang.org/docs/handbook/functions.html#overloads
+
+
+
+// function filterPersons(persons: Person[], personType: Admin["type"], criteria: Partial<Admin>): Admin[];
+// function filterPersons(persons: Person[], personType: User["type"], criteria: Partial<User>): User[] {
+//   if (personType == 'user') {
+//     return (persons)
+//     .filter((person) => person.type === personType)
+//     .filter((person) => {
+//         let criteriaKeys = Object.keys(criteria) as (keyof User)[];
+//         return criteriaKeys.every((fieldName) => {
+//             return person[fieldName] === criteria[fieldName];
+//         });
+//     });
+//   } else {
+//     return persons
+//     .filter((person) => person.type === personType)
+//     .filter((person) => {
+//         let criteriaKeys = Object.keys(criteria) as (keyof Admin)[];
+//         return criteriaKeys.every((fieldName) => {
+//             return person[fieldName] === criteria[fieldName];
+//         });
+//     });
+//   }
