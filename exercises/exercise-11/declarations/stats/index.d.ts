@@ -1,4 +1,13 @@
 declare module 'stats' {
+
+  interface IndexFunc<T> {
+    (input: T[], comparator: (a: T, b: T) => number): number;
+  }
+
+  type Comparator<T> {
+    (a: T, b: T): number
+  }
+
   export function getMaxIndex<T>(
     input: T[],
     comparator: (a: T, b: T) => number
@@ -6,27 +15,27 @@ declare module 'stats' {
 
   export function getMaxElement<T>(
     input: T[],
-    comparator: (a: T, b: T) => number
+    comparator: Comparator<T>
   ): null | T;
 
   export function getMinIndex<T>(
     input: T[],
-    comparator: (a: T, b: T) => number
+    comparator: Comparator<T>
   ): number;
 
   export function getMinElement<T>(
     input: T[],
-    comparator: (a: T, b: T) => number
+    comparator: Comparator<T>
   ): null | T;
 
   export function getMedianIndex<T>(
     input: T[],
-    comparator: (a: T, b: T) => number
+    comparator: Comparator<T>
   ): number;
 
   export function getMedianElement<T>(
     input: T[],
-    comparator: (a: T, b: T) => number
+    comparator: Comparator<T>
   ): null | T;
 
   export function getAverageValue<T>(
